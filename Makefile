@@ -1,2 +1,2 @@
 package:
-	tar -czfL chat.tar.gz assets/ *.php
+	tar -czLf chat.tar.gz assets/ *.php
