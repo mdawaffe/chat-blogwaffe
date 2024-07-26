@@ -15,6 +15,6 @@
     "config.php"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.1"
+    "bootstrap": "~5.3.3"
   }
 }

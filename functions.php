@@ -21,7 +21,7 @@ function back( $args = null ) {
 }
 
 function cookie_path() {
-	list ( $cookie_path ) = explode( '?', $_SERVER['REQUEST_URI'] );
+	[ $cookie_path ] = explode( '?', $_SERVER['REQUEST_URI'] );
 	if ( '/' !== substr( $cookie_path, -1 ) ) {
 		$cookie_path = $dirname( $cookie_path );
 	}
@@ -34,12 +34,14 @@ function set_args( $args ) {
 		return;
 	}
 
+	[ $domain ] = explode( ':', $_SERVER['HTTP_HOST'] );
+
 	setcookie(
 		'chat',
 		urlencode( json_encode( $args ) ),
 		time() + 30,
 		cookie_path(),
-		$_SERVER['HTTP_HOST'],
+		$domain,
 		isset( $_SERVER['HTTPS'] ) && 'off' !== strtolower( $_SERVER['HTTPS'] ),
 		true
 	);
@@ -52,12 +54,14 @@ function clear_args() {
 
 	$_COOKIE['chat'] = json_decode( urldecode( $_COOKIE['chat'] ), true );
 
+	[ $domain ] = explode( ':', $_SERVER['HTTP_HOST'] );
+
 	setcookie(
 		'chat',
 		'.',
 		time() - 31536000,
 		cookie_path(),
-		$_SERVER['HTTP_HOST'],
+		$domain,
 		isset( $_SERVER['HTTPS'] ) && 'off' !== strtolower( $_SERVER['HTTPS'] ),
 		true
 	);
